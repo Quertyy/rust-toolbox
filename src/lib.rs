@@ -1,4 +1,38 @@
 use std::collections::HashMap;
+use clap::{Subcommand, Parser, Args, command};
+
+#[derive(Debug, Parser)]
+#[command(author, version, about)]
+pub struct Cli {
+    #[command(subcommand)]
+    pub command: Commands
+}
+
+#[derive(Debug, Subcommand)]
+pub enum Commands {
+    #[command(name = "get")]
+    Get(Get),
+    #[command(name = "set")]
+    Set(Set),
+    #[command(name = "rm")]
+    Remove(Remove),
+}
+
+#[derive(Args, Debug)]
+pub struct Get {
+    key: String
+}
+
+#[derive(Args, Debug)]
+pub struct Set {
+    key: String,
+    value: String
+}
+
+#[derive(Args, Debug)]
+pub struct Remove {
+    key: String
+}
 
 pub struct KvStore {
     pub items: HashMap<String, String>,
